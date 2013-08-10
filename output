@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$1" == 'extend' ]; then
+		xrandr --output LVDS1 --auto --output VGA1 --auto --right-of LVDS1
+elif [ "$1" == 'same' ]; then
+	xrandr --output LVDS1 --auto --output VGA1 --auto --same-as LVDS1
+elif [ "$1" == 'off' ]; then
+	xrandr --output LVDS1 --auto --output VGA1 --off
+else 
+	echo "Usage:"
+	echo "output extend : extends output to external output VGA1"
+	echo "output same   : mirrors output to external output VGA1"
+	echo "output off    : turns off external output"
+fi
