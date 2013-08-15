@@ -1,14 +1,37 @@
 #!/bin/bash
+#
+# Copyright (c) 2013 Ralph Duerig (ralphduerig@googlemail.com)
+#
+# This script simply encloses the xrandr program to handle multiple outputs.
+
+if [ -n "$2" ]; then
+	# if the second argument is present, use it
+	OUT=$2
+else
+	# otherwise fall back to VGA1 output
+	OUT="VGA1"
+fi
+
+# TODO check if given output exists after all
+POS=xrandr | grep "$OUT"
+if [ -z "$POS" ]; then
+	echo "Desired output not found."
+	exit
+fi
 
 if [ "$1" == 'extend' ]; then
-		xrandr --output LVDS1 --auto --output VGA1 --auto --right-of LVDS1
+	# if output should be extended, extend to right of LVDS1
+		xrandr --output LVDS1 --auto --output $OUT --auto --right-of LVDS1
 elif [ "$1" == 'same' ]; then
-	xrandr --output LVDS1 --auto --output VGA1 --auto --same-as LVDS1
+	# if the two outputs shall be the same
+	xrandr --output LVDS1 --auto --output $OUT --auto --same-as LVDS1
 elif [ "$1" == 'off' ]; then
-	xrandr --output LVDS1 --auto --output VGA1 --off
+	# turn multioutput off
+	xrandr --output LVDS1 --auto --output $OUT --off
 else 
+	# if all fails we can still print usage information 
 	echo "Usage:"
-	echo "output extend : extends output to external output VGA1"
-	echo "output same   : mirrors output to external output VGA1"
-	echo "output off    : turns off external output"
+	echo "output extend [OUTPUT]: extends output to external output [OUTPUT] (e.q. VGA1)"
+	echo "output same [OUTPUT]  : mirrors output to external output VGA1"
+	echo "output off [OUTPUT]   : turns off external output"
 fi
