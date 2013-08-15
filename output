@@ -13,11 +13,11 @@ else
 fi
 
 # TODO check if given output exists after all
-POS=xrandr | grep "$OUT"
-if [ -z "$POS" ]; then
-	echo "Desired output not found."
-	exit
-fi
+#POS=xrandr | grep "$OUT"
+#if [ -z "$POS" ]; then
+#	echo "Desired output not found."
+#	exit
+#fi
 
 if [ "$1" == 'extend' ]; then
 	# if output should be extended, extend to right of LVDS1
