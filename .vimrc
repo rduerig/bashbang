@@ -40,6 +40,9 @@ noremap <Leader>gc :!git commit -a
 " hit leader-gps to invoke git push 
 noremap <Leader>gps :!git push bitbucket master
 
+" COMMANDS
+command Done :normal s++<ESC> k dd :m$<CR>g; 
+
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
