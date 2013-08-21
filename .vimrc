@@ -11,12 +11,19 @@ set nocompatible                " vi compatible is LAME
 set background=dark             " Use colours that work well on a dark background (Console is usually black)
 set showmode                    " show the current mode
 set hlsearch			" turns on highlighting search results
+set incsearch
+set ignorecase
+set smartcase
+
 syntax on                       " turn syntax highlighting on by default
 
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
 
-" set guifont=Consolas:h10
+set guifont=Consolas:h11
+
+set encoding=utf-8
+set fileencoding=utf-8
 
 " MAPPINGS
 " maps ö to 0 - go to start of line
@@ -39,6 +46,9 @@ noremap <Leader>gs :!git status
 noremap <Leader>gc :!git commit -a
 " hit leader-gps to invoke git push 
 noremap <Leader>gps :!git push bitbucket master
+" hit leader-c to comment out the current line
+" TODO map to function that provides language specific comments
+noremap <Leader>c I%<ESC>
 
 " COMMANDS
 command Done :normal s++<ESC> k dd :m$<CR>g; 
