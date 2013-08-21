@@ -51,7 +51,7 @@ noremap <Leader>gps :!git push bitbucket master
 noremap <Leader>c I%<ESC>
 
 " COMMANDS
-command Done :normal s++<ESC> k dd :m$<CR>g; 
+command Done :normal 0s++<ESC> k dd :m$<CR>g; 
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
