@@ -54,6 +54,9 @@ noremap <Leader>gps :!git push bitbucket master
 noremap <Leader>m :!make<CR>
 " hit leader-em to open vimrc in new tab
 noremap <Leader>em :tabe $MYVIMRC<CR>
+" hit leader-c to comment out the current line
+" TODO map to function that provides language specific comments
+noremap <Leader>c I%<ESC>
 
 " COMMANDS
 command Done :normal 0s++<ESC> k dd :m$<CR>g;
@@ -61,6 +64,9 @@ command Done :normal 0s++<ESC> k dd :m$<CR>g;
 
 " MACROS
 let @t='"xciw\text{x}'
+
+" COMMANDS
+command Done :normal 0s++<ESC> k dd :m$<CR>g; 
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
