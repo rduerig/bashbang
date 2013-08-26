@@ -1,5 +1,6 @@
 " Setting some decent VIM settings for programming
 
+set cursorline			" highlights current line
 set scrolloff=20		" keeps cursor in focus
 set nu				" line numbers
 set ai                          " set auto-indenting on for programming
@@ -11,10 +12,20 @@ set nocompatible                " vi compatible is LAME
 set background=dark             " Use colours that work well on a dark background (Console is usually black)
 set showmode                    " show the current mode
 set hlsearch			" turns on highlighting search results
+set ignorecase			" case insensitive search when search string is lower case
+set smartcase			" case sensitive search when search string contains at least one upper case letter
+set incsearch			" turn on incremental search
+
 syntax on                       " turn syntax highlighting on by default
+
+set encoding=utf-8
+set fileencoding=utf-8
 
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
+
+" ignore the following filetypes
+set wildignore+=*.so,*.swp,*.*~,*.aux
 
 " set guifont=Consolas:h10
 
@@ -30,18 +41,26 @@ nnoremap ü <C-]>
 
 " MAPPING LEADER
 " hit leader-sp to turn spell checking on
-noremap <Leader>sp :setlocal spell spelllang=en_us
+noremap <Leader>sp :setlocal spell spelllang=en_us<CR>
 " hit leader-spo to turn spell checking off
-noremap <Leader>spo :setlocal nospell
+noremap <Leader>spo :setlocal nospell<CR>
 " hit leader-gs to invoke git status
-noremap <Leader>gs :!git status
+noremap <Leader>gs :!git status<CR>
 " hit leader-gc to invoke git commit -a
-noremap <Leader>gc :!git commit -a
+noremap <Leader>gc :!git commit -a -m '
 " hit leader-gps to invoke git push 
 noremap <Leader>gps :!git push bitbucket master
+" hit leader-m to invoke !make
+noremap <Leader>m :!make<CR>
+" hit leader-em to open vimrc in new tab
+noremap <Leader>em :tabe $MYVIMRC<CR>
 
 " COMMANDS
-command Done :normal s++<ESC> k dd :m$<CR>g; 
+command Done :normal 0s++<ESC> k dd :m$<CR>g;
+" command MathText :normal "xciw\text{x}
+
+" MACROS
+let @t='"xciw\text{x}'
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
@@ -69,6 +88,7 @@ if has("autocmd")
       autocmd Syntax gitcommit setlocal textwidth=74
 
       autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+      autocmd Filetype java set tags=/home/rayu/Dev/java7openjdk-src/tags
 endif " has("autocmd")
 
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
@@ -123,7 +143,5 @@ endif
 " bring up the omni completion menu, then it simulates <C-N><C-P> to remove
 " the longest common text, and finally it simulates <Down> again to keep a
 " match highlighted.
-"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-"inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
