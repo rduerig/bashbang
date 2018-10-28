@@ -15,11 +15,21 @@ set hlsearch			" turns on highlighting search results
 set ignorecase			" case insensitive search when search string is lower case
 set smartcase			" case sensitive search when search string contains at least one upper case letter
 set incsearch			" turn on incremental search
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set foldminlines=2         " avoid folding of single wrapped lines
 
 syntax on                       " turn syntax highlighting on by default
 
 set encoding=utf-8
 set fileencoding=utf-8
+
+" diable Latex Folding
+let Tex_FoldedSections="section,subsection"
+let Tex_FoldedEnvironments=""
+let Tex_FoldedMisc=""
+
 
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
@@ -28,6 +38,7 @@ set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(ex
 set wildignore+=*.so,*.swp,*.*~,*.aux
 
 " set guifont=Consolas:h10
+ 	set gfn=Monospace\ 12
 
 " MAPPINGS
 " maps ö to 0 - go to start of line
@@ -59,14 +70,23 @@ noremap <Leader>em :tabe $MYVIMRC<CR>
 noremap <Leader>c I%<ESC>
 
 " COMMANDS
-command Done :normal 0s++<ESC> k dd :m$<CR>g;
+command! Done :normal 0s++<ESC> k dd :m$<CR>g;
 " command MathText :normal "xciw\text{x}
+command! -nargs=1 Frame :normal! i<CR>\begin{frame}<CR>\frametitle{<args>}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{frame}<CR>\note{<CR>}<CR><ESC>g;
+command! -nargs=1 FrameFrag :normal! i<CR>\begin{frame}[fragile]<CR>\frametitle{<args>}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{frame}<CR>\note{<CR>}<CR><ESC>g;
 
 " MACROS
 let @t='"xciw\text{x}'
 
-" COMMANDS
-command Done :normal 0s++<ESC> k dd :m$<CR>g; 
+" FUNCTIONS
+function! Texin(texcom)
+  let givenCommand = a:texcom
+  let wordUnderCursor = expand("<cword>")
+  execute "normal! diw"
+  put ='\' . givenCommand . '{' . wordUnderCursor . '}'
+endfunction
+" TODO this function puts the desired text in a new line
+
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
@@ -118,6 +138,15 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
+" auto insert \item in itemize environments
+" function CR()
+    " if searchpair('\\begin{itemize}', '', '\\end{itemize}', '')
+        " return "\r\\item"
+    " endif
+    " return "\r"
+" endfunction
+" inoremap <expr><buffer> <CR> CR()
+
 " guicolorscheme.vim plugin specific settings
 " IMPORTANT: Uncomment one of the following lines to force
 " " using 256 colors (or 88 colors) if your terminal supports it,
@@ -151,3 +180,13 @@ endif
 " match highlighted.
 "inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 "inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" solid underscore
+" let &t_SI .= "\<Esc>[4 q"
+" solid block
+" let &t_EI .= "\<Esc>[2 q"
+" 1 or 0 -> blinking block
+" 3 -> blinking underscore
+" Recent versions of xterm (282 or above) also support
+" 5 -> blinking vertical bar
+" 6 -> solid vertical bar
