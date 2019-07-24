@@ -1,7 +1,7 @@
 " Setting some decent VIM settings for programming
 
 set cursorline			" highlights current line
-set scrolloff=20		" keeps cursor in focus
+set scrolloff=7		" keeps cursor in focus
 set nu				" line numbers
 set ai                          " set auto-indenting on for programming
 set showmatch                   " automatically show matching brackets. works like it does in bbedit.
@@ -15,8 +15,8 @@ set hlsearch			" turns on highlighting search results
 set ignorecase			" case insensitive search when search string is lower case
 set smartcase			" case sensitive search when search string contains at least one upper case letter
 set incsearch			" turn on incremental search
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set foldminlines=2         " avoid folding of single wrapped lines
 
@@ -115,6 +115,8 @@ if has("autocmd")
 
       autocmd Filetype java setlocal omnifunc=javacomplete#Complete
       autocmd Filetype java set tags=/home/rayu/Dev/java7openjdk-src/tags
+
+      autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 endif " has("autocmd")
 
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
