@@ -27,7 +27,7 @@ set fileencoding=utf-8
 
 " diable Latex Folding
 let Tex_FoldedSections="section,subsection"
-let Tex_FoldedEnvironments=""
+let Tex_FoldedEnvironments="solutionorgrid,solution"
 let Tex_FoldedMisc=""
 
 
@@ -38,7 +38,7 @@ set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(ex
 set wildignore+=*.so,*.swp,*.*~,*.aux
 
 " set guifont=Consolas:h10
- 	set gfn=Monospace\ 12
+ 	set gfn=Monospace\ 10
 
 " MAPPINGS
 " maps ö to 0 - go to start of line
