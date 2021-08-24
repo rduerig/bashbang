@@ -1,3 +1,7 @@
+" Pathogen
+call pathogen#infect()
+call pathogen#helptags()
+
 " Setting some decent VIM settings for programming
 
 set cursorline			" highlights current line
@@ -35,10 +39,10 @@ let Tex_FoldedMisc=""
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
 
 " ignore the following filetypes
-set wildignore+=*.so,*.swp,*.*~,*.aux
+set wildignore+=*.so,*.swp,*.*~,*.aux,*.fdb_latexmk,*.fls,*.out
 
-" set guifont=Consolas:h10
- 	set gfn=Monospace\ 10
+set guifont=Consolas:h12
+" set gfn=Monospace\ 12
 
 " MAPPINGS
 " maps ö to 0 - go to start of line
@@ -49,6 +53,9 @@ noremap ä $
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 " maps ü to CTRL-] - jump to topic under cursor
 nnoremap ü <C-]>
+
+" easier buffer switching
+nnoremap <F5> :buffers<CR>:buffer<Space>
 
 " MAPPING LEADER
 " hit leader-sp to turn spell checking on
@@ -74,6 +81,7 @@ command! Done :normal 0s++<ESC> k dd :m$<CR>g;
 " command MathText :normal "xciw\text{x}
 command! -nargs=1 Frame :normal! i<CR>\begin{frame}<CR>\frametitle{<args>}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{frame}<CR>\note{<CR>}<CR><ESC>g;
 command! -nargs=1 FrameFrag :normal! i<CR>\begin{frame}[fragile]<CR>\frametitle{<args>}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{frame}<CR>\note{<CR>}<CR><ESC>g;
+command! -nargs=0 Question :normal! i<CR>\question{<CR>\begin{solution}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{solution}<CR>}<CR><ESC>g;
 
 " MACROS
 let @t='"xciw\text{x}'
