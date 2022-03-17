@@ -34,6 +34,9 @@ let Tex_FoldedSections="section,subsection"
 let Tex_FoldedEnvironments="solutionorgrid,solution"
 let Tex_FoldedMisc=""
 
+" TeX Suite settings
+let g:Tex_ViewRule_pdf = "evince"
+
 
 " Show EOL type and last modified timestamp, right after the filename
 set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})%=%l,%c%V\ %P
@@ -55,7 +58,7 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 nnoremap ü <C-]>
 
 " easier buffer switching
-nnoremap <F5> :buffers<CR>:buffer<Space>
+nnoremap <F4> :buffers<CR>:buffer<Space>
 
 " MAPPING LEADER
 " hit leader-sp to turn spell checking on
@@ -83,6 +86,9 @@ command! -nargs=1 Frame :normal! i<CR>\begin{frame}<CR>\frametitle{<args>}<CR>\b
 command! -nargs=1 FrameFrag :normal! i<CR>\begin{frame}[fragile]<CR>\frametitle{<args>}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{frame}<CR>\note{<CR>}<CR><ESC>g;
 command! -nargs=0 Question :normal! i<CR>\question{<CR>\begin{solution}<CR>\begin{itemize}<CR>\item \ldots<CR>\end{itemize}<CR>\end{solution}<CR>}<CR><ESC>g;
 
+command! -nargs=0 Latexmk :call Latexmk()
+command! -nargs=0 Latexview :call Latexview()
+
 " MACROS
 let @t='"xciw\text{x}'
 
@@ -94,6 +100,14 @@ function! Texin(texcom)
   put ='\' . givenCommand . '{' . wordUnderCursor . '}'
 endfunction
 " TODO this function puts the desired text in a new line
+
+function! Latexmk()
+  execute "!start latexmk -pdf -f %"
+endfunction
+
+function! Latexview()
+  execute "!start evince %:r.pdf"
+endfunction
 
 
 "------------------------------------------------------------------------------
